@@ -3,6 +3,9 @@ import re
 from PyPDF2 import PdfFileMerger, PdfFileWriter, PdfFileReader
 import os
 
+#TODO: Implementation of SubSubChapters in filenames is buggy
+#TODO: programm not running as expected when there is only one chapter in filenames
+
 def pdf_merge(filename_merged_pdf):
     ''' Merge all the pdf files in the current directory '''
     merger = PdfFileMerger()
