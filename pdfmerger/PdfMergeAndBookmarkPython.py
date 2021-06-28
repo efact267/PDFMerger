@@ -2,23 +2,6 @@ from glob import glob
 import re
 from PyPDF2 import PdfFileMerger, PdfFileWriter, PdfFileReader
 import os
-import shutil
-
-#TODO: Eigenschaften PDF: Author, Keywords, etc..
-
-# def pdf_create_temp_copy(filename_merged_pdf):
-#     temp_pdf = "TEMP" + filename_merged_pdf
-#     src = os.path.join(os.getcwd(), filename_merged_pdf)
-#     dst = os.path.join(os.getcwd(), temp_pdf)
-#     shutil.copy(src,dst)
-
-# def pdf_delete_temp_copy(filename_merged_pdf):
-#     # close and delete temporary merged pdf without bookmarks
-#     temp_pdf = "TEMP" + filename_merged_pdf
-#     if os.path.exists(temp_pdf):
-#         os.remove(temp_pdf)
-#     else:
-#         print("Could not delete temporary file")
 
 def pdf_merge(filename_merged_pdf):
     ''' Merge all the pdf files in the current directory '''
@@ -103,71 +86,15 @@ def pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages):
         print("Could not delete temporary file")
 
 
-# def pdf_add_metadata(filename_merged_pdf, pdf_meta_title, pdf_meta_subject, pdf_meta_author):
-    
-#     temp_pdf = "TEMP" + filename_merged_pdf
-#     src = os.path.join(os.getcwd(), filename_merged_pdf)
-#     dst = os.path.join(os.getcwd(), temp_pdf)
-#     shutil.copy(src,dst)
-    
-#     writer = PdfFileWriter()
-
-#     temp_input_file = open(temp_pdf, 'rb')
-#     reader = PdfFileReader(temp_input_file)
-#     metadata = reader.getDocumentInfo()
-#     print(metadata)
-    
-#     metadata_dict = {
-#         '/Title': pdf_meta_title,
-#         '/Subject': pdf_meta_subject,
-#         '/Author': pdf_meta_author
-#     }
-
-#     merger = PdfFileMerger()
-#     merger.append(temp_input_file)
-#     merger.addMetadata(metadata_dict)
-    
-#     fout = open(filename_merged_pdf, 'wb')
-#     merger.write(fout)
-#     fout.close()
-
-
-   
-    # num_pages = reader.getNumPages()                         # get total number of pages from the temporary merged pdf
-    # pages = list(range(0, num_pages))
-    # for page in pages:
-    #     writer.addPage(reader.getPage(page)) # insert all pages
-
-
-
-    # # save pdf with metadata
-    # writer.addMetadata(metadata_dict)
-    # outputStream = open(filename_merged_pdf, 'wb')
-    # writer.write(outputStream)
-    # outputStream.close()
-
-    # close and delete temporary merged pdf without bookmarks
-    # temp_input_file.close()
-    # if os.path.exists(temp_pdf):
-    #     os.remove(temp_pdf)
-    # else:
-    #     print("Could not delete temporary file")
 
 if __name__ == "__main__":
     FILE_EXTENSION = ".pdf"
-    filename_merged_pdf = "2021-06_Bewerbung_Saathoff_Christian"
-    pdf_meta_title = "Bewerbung Christian Saathoff"
-    pdf_meta_subject = "Bewerbung"
-    pdf_meta_author = "Christian Saathoff"
+    filename_merged_pdf = "final_merged_pdf_with_bookmarks"
        
     filename_merged_pdf = filename_merged_pdf + FILE_EXTENSION
     filename_contents, file_pages = parse_filenames_for_bookmarks()
     pdf_merge(filename_merged_pdf)
-    # pdf_add_metadata(filename_merged_pdf, pdf_meta_title, pdf_meta_subject, pdf_meta_author)
     pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages)
-
-
-
 
     print('\n', filename_merged_pdf, " successfully created.\n")
 
