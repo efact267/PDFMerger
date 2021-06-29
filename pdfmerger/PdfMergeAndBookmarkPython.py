@@ -52,6 +52,23 @@ def pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages):
     for page in pages:
         writer.addPage(reader.getPage(page)) # insert all pages
 
+
+
+#--------------------------------------------------------------------------
+    # for files in range(len(filename_contents)):
+    #     if filename_contents[files][1] != filename_contents[files-1][1]:
+    #         chapter = writer.addBookmark(filename_contents[files][1], page_counter, parent=None)    # add bookmark for Chapter
+        
+
+    #     if filename_contents[files][2]:
+    #         sub_chapter = writer.addBookmark(filename_contents[files][2], page_counter, parent=chapter) # add bookmark for SubChapter
+    #         if filename_contents[files][3]:
+    #             writer.addBookmark(filename_contents[files][3], page_counter, parent=sub_chapter)       # add bookmark for SubSubChapter
+    #     chapter=None
+#--------------------------------------------------------------------------
+
+
+
     # add the bookmarks based on the parsed filenames
     for files in range(len(filename_contents)):
         try:
@@ -63,7 +80,8 @@ def pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages):
                 print("UNexpected EXCEPTION! Could not add bookmark for Chapter.")
             # add bookmark for SubChapter if existing
             try:
-                sub_chapter = writer.addBookmark(filename_contents[files][2], page_counter, parent=chapter) # add bookmark for SubChapter
+                if((files==0) | (filename_contents[files][2] != filename_contents[files-1][2])):
+                    sub_chapter = writer.addBookmark(filename_contents[files][2], page_counter, parent=chapter) # add bookmark for SubChapter
                 #add bookmark for SubSubChapter if existing
                 try:
                     writer.addBookmark(filename_contents[files][3], page_counter, parent=sub_chapter)       # add bookmark for SubSubChapter
