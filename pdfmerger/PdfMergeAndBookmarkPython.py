@@ -53,10 +53,11 @@ def pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages):
         writer.addPage(reader.getPage(page)) # insert all pages
 
 
-
-#--------------------------------------------------------------------------
     for files in range(len(filename_contents)):
         print("######################\n","----- File No. ", files, " -----", "######################\n")
+
+        def parse_chapter(index, filename_contents[])
+
         index = 1
         if (0 <= index < len(filename_contents[files])):  
             if files==0:
@@ -99,34 +100,7 @@ def pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages):
             print("No SubSubChapter found in ", filename_contents[files])
         
         page_counter = page_counter + file_pages[files]
-        #chapter=None
-#--------------------------------------------------------------------------
-
-
-
-    # # add the bookmarks based on the parsed filenames
-    # for files in range(len(filename_contents)):
-    #     try:
-    #         # add bookmark for Chapters
-    #         try:
-    #             if ((filename_contents[files][1]) != filename_contents[files-1][1]):
-    #                 chapter = writer.addBookmark(filename_contents[files][1], page_counter, parent=None)    # add bookmark for Chapter
-    #         except:
-    #             print("UNexpected EXCEPTION! Could not add bookmark for Chapter.")
-    #         # add bookmark for SubChapter if existing
-    #         try:
-    #             if((files==0) | (filename_contents[files][2] != filename_contents[files-1][2])):
-    #                 sub_chapter = writer.addBookmark(filename_contents[files][2], page_counter, parent=chapter) # add bookmark for SubChapter
-    #             #add bookmark for SubSubChapter if existing
-    #             try:
-    #                 writer.addBookmark(filename_contents[files][3], page_counter, parent=sub_chapter)       # add bookmark for SubSubChapter
-    #             except:
-    #                 print("Expected EXCEPTION1: No SubSubChapter existing in", filename_contents[files]) 
-    #         except:
-    #             print("Expected EXCEPTION2: No SubChapter existing in", filename_contents[files])        
-    #     except:
-    #         print("Unexpected EXCEPTION!! Bookmark process was not successful as expected.") 
-    #     page_counter = page_counter + file_pages[files]
+  
     
     # open bookmarks tab and save merged and bookmarked pdf
     writer.setPageMode("/UseOutlines")                  # tells the PDF to open to bookmarks
