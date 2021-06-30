@@ -56,7 +56,35 @@ def pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages):
     for files in range(len(filename_contents)):
         print("######################\n","----- File No. ", files, " -----", "######################\n")
 
-        def parse_chapter(index, filename_contents[])
+
+
+#---------------------------------------------------------------------------------------------------------------------------
+        def parse_chapter(index, filename_contents, files, page_counter, level_1, level_2):
+            if (0 <= index < len(filename_contents[files])):  
+                if files==0:
+                    level_2 = writer.addBookmark(filename_contents[files][1], page_counter, parent=level_1)    # add bookmark for Chapter
+                    print("Chapter ", filename_contents[files][1], " added.")
+                elif filename_contents[files][1] != filename_contents[files-1][1]:
+                    level_2 = writer.addBookmark(filename_contents[files][1], page_counter, parent=level_1)    # add bookmark for Chapter
+                    print("Chapter ", filename_contents[files][1], " added.")
+                else:
+                    print("No (new) chapter found in ", filename_contents[files])
+            return level_2
+
+        index = 1
+        level_1 = None
+        level_2 = "chapter"
+        level_1 = parse_chapter(index, filename_contents, files, page_counter, level_1, level_2)
+
+        index = 2
+        level_2 = "sub_chapter"
+        level_1 = parse_chapter(index, filename_contents, files, page_counter, level_1, level_2)
+
+        index = 3
+        level_2 = "sub_sub_chapter"
+        level_1 = parse_chapter(index, filename_contents, files, page_counter, level_1, level_2)
+
+#---------------------------------------------------------------------------------------------------------------------------
 
         index = 1
         if (0 <= index < len(filename_contents[files])):  
