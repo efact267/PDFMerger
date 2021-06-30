@@ -55,43 +55,78 @@ def pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages):
 
 
 #--------------------------------------------------------------------------
-    # for files in range(len(filename_contents)):
-    #     if filename_contents[files][1] != filename_contents[files-1][1]:
-    #         chapter = writer.addBookmark(filename_contents[files][1], page_counter, parent=None)    # add bookmark for Chapter
+    for files in range(len(filename_contents)):
+        print("######################\n","----- File No. ", files, " -----", "######################\n")
+        index = 1
+        if (0 <= index < len(filename_contents[files])):  
+            if files==0:
+                chapter = writer.addBookmark(filename_contents[files][1], page_counter, parent=None)    # add bookmark for Chapter
+                print("Chapter ", filename_contents[files][1], " added.")
+            elif filename_contents[files][1] != filename_contents[files-1][1]:
+                chapter = writer.addBookmark(filename_contents[files][1], page_counter, parent=None)    # add bookmark for Chapter
+                print("Chapter ", filename_contents[files][1], " added.")
+            else:
+                print("No (new) chapter found in ", filename_contents[files])
         
+        index = 2
+        if (0 <= index < len(filename_contents[files])):
+            if files==0:
+                sub_chapter = writer.addBookmark(filename_contents[files][index], page_counter, parent=chapter)    # add bookmark for SubChapter
+                print("SubChapter ", filename_contents[files][index], " added.")
+            elif (0 <= index < len(filename_contents[files-1])):
+                if filename_contents[files][index] != filename_contents[files-1][index]:
+                    sub_chapter = writer.addBookmark(filename_contents[files][index], page_counter, parent=chapter)    # add bookmark for SubChapter
+                    print("SubChapter ", filename_contents[files][index], " added.")
+            else:
+                sub_chapter = writer.addBookmark(filename_contents[files][index], page_counter, parent=chapter)    # add bookmark for SubChapter
+                print("SubChapter ", filename_contents[files][index], " added.")
+        else:
+            print("No SubChapter found in ", filename_contents[files])
 
-    #     if filename_contents[files][2]:
-    #         sub_chapter = writer.addBookmark(filename_contents[files][2], page_counter, parent=chapter) # add bookmark for SubChapter
-    #         if filename_contents[files][3]:
-    #             writer.addBookmark(filename_contents[files][3], page_counter, parent=sub_chapter)       # add bookmark for SubSubChapter
-    #     chapter=None
+        index = 3
+        if (0 <= index < len(filename_contents[files])):
+            if files==0:
+                writer.addBookmark(filename_contents[files][index], page_counter, parent=sub_chapter)    # add bookmark for SubSubChapter
+                print("SubSubChapter ", filename_contents[files][index], " added.")
+            elif (0 <= index < len(filename_contents[files-1])):
+                if filename_contents[files][index] != filename_contents[files-1][index]:
+                    writer.addBookmark(filename_contents[files][index], page_counter, parent=sub_chapter)    # add bookmark for SubSubChapter
+                    print("SubSubChapter ", filename_contents[files][index], " added.")
+            else:
+                writer.addBookmark(filename_contents[files][index], page_counter, parent=sub_chapter)    # add bookmark for SubSubChapter
+                print("SubSubChapter ", filename_contents[files][index], " added.")
+        else:
+            print("No SubSubChapter found in ", filename_contents[files])
+        
+        page_counter = page_counter + file_pages[files]
+        #chapter=None
 #--------------------------------------------------------------------------
 
 
 
-    # add the bookmarks based on the parsed filenames
-    for files in range(len(filename_contents)):
-        try:
-            # add bookmark for Chapters
-            try:
-                if ((filename_contents[files][1]) != filename_contents[files-1][1]):
-                    chapter = writer.addBookmark(filename_contents[files][1], page_counter, parent=None)    # add bookmark for Chapter
-            except:
-                print("UNexpected EXCEPTION! Could not add bookmark for Chapter.")
-            # add bookmark for SubChapter if existing
-            try:
-                if((files==0) | (filename_contents[files][2] != filename_contents[files-1][2])):
-                    sub_chapter = writer.addBookmark(filename_contents[files][2], page_counter, parent=chapter) # add bookmark for SubChapter
-                #add bookmark for SubSubChapter if existing
-                try:
-                    writer.addBookmark(filename_contents[files][3], page_counter, parent=sub_chapter)       # add bookmark for SubSubChapter
-                except:
-                    print("Expected EXCEPTION1: No SubSubChapter existing in", filename_contents[files]) 
-            except:
-                print("Expected EXCEPTION2: No SubChapter existing in", filename_contents[files])        
-        except:
-            print("Unexpected EXCEPTION!! Bookmark process was not successful as expected.") 
-        page_counter = page_counter + file_pages[files]
+    # # add the bookmarks based on the parsed filenames
+    # for files in range(len(filename_contents)):
+    #     try:
+    #         # add bookmark for Chapters
+    #         try:
+    #             if ((filename_contents[files][1]) != filename_contents[files-1][1]):
+    #                 chapter = writer.addBookmark(filename_contents[files][1], page_counter, parent=None)    # add bookmark for Chapter
+    #         except:
+    #             print("UNexpected EXCEPTION! Could not add bookmark for Chapter.")
+    #         # add bookmark for SubChapter if existing
+    #         try:
+    #             if((files==0) | (filename_contents[files][2] != filename_contents[files-1][2])):
+    #                 sub_chapter = writer.addBookmark(filename_contents[files][2], page_counter, parent=chapter) # add bookmark for SubChapter
+    #             #add bookmark for SubSubChapter if existing
+    #             try:
+    #                 writer.addBookmark(filename_contents[files][3], page_counter, parent=sub_chapter)       # add bookmark for SubSubChapter
+    #             except:
+    #                 print("Expected EXCEPTION1: No SubSubChapter existing in", filename_contents[files]) 
+    #         except:
+    #             print("Expected EXCEPTION2: No SubChapter existing in", filename_contents[files])        
+    #     except:
+    #         print("Unexpected EXCEPTION!! Bookmark process was not successful as expected.") 
+    #     page_counter = page_counter + file_pages[files]
     
     # open bookmarks tab and save merged and bookmarked pdf
     writer.setPageMode("/UseOutlines")                  # tells the PDF to open to bookmarks
