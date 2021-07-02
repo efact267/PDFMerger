@@ -151,6 +151,3 @@ if __name__ == "__main__":
     pdf_add_bookmarks(filename_merged_pdf, filename_contents, file_pages)
 
     print('\n', filename_merged_pdf, " successfully created.\n")
-
-
-
