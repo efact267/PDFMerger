@@ -9,6 +9,9 @@ __pycache__/
 # VSCode
 *.vscode
 
+# PDF Files
+*.pdf
+
 # Distribution / packaging
 .Python
 build/
